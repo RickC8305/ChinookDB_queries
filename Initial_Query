@@ -1,0 +1,20 @@
+/*This is my first query within this database, learning CASE, GROUP BY, joining multiple tables, and making more complex SQL queries. I was trying to replicate a table that read as follows
+invoice_id 	customer_id 	invoice_date 	billing_country 	total
+1 	18 	2017-01-03 00:00:00 	USA 	15.84
+2 	30 	2017-01-03 00:00:00 	Canada 	9.90
+3 	40 	2017-01-05 00:00:00 	France 	1.98
+but while the question on my training program wanted it all from one table, I wanted to use multiple tables to try to gain a more thorough understanding of SQL language, and thus came this:*/
+
+SELECT invoice_line.invoice_id, customer.customer_id, invoice.invoice_date, invoice.billing_country, invoice.total
+FROM invoice_line
+    JOIN customer ON invoice.customer_id = customer.customer_id
+    JOIN invoice ON invoice_line.invoice_id = invoice.invoice_id
+    WHERE invoice.billing_country IN('USA', 'Canada', 'France')
+    GROUP BY invoice.billing_country
+    ORDER BY
+        CASE billing_country
+            WHEN 'USA' THEN 1
+            WHEN 'Canada' THEN 2
+            WHEN 'France' Then 3
+        END;
+
